@@ -130,7 +130,7 @@ def boucle():
     t.child_frame_id = 'base_link'
     t.transform.translation.x = float(odom_x)
     t.transform.translation.y = float(odom_y)
-    t.transform.translation.z = 0.0
+    t.transform.translation.z = -Z0
     t.transform.rotation.z = float(np.sin(theta / 2.0))
     t.transform.rotation.w = float(np.cos(theta / 2.0))
     br.sendTransform(t)
