@@ -1,6 +1,7 @@
 import rclpy
 from sensor_msgs.msg import JointState
-from geometry_msgs.msg import TwistStamped
+from geometry_msgs.msg import TwistStamped, TransformStamped
+from tf2_ros import TransformBroadcaster
 from hexapode.ik_patte import cinematique_inverse
 import numpy as np
 
@@ -25,8 +26,13 @@ vy = 0.0
 w = 0.0
 phase = 0.0
 
+odom_x = 0.0
+odom_y = 0.0
+theta = 0.0
+
 node = None
 pub = None
+br = None
 noms = []
 
 
@@ -78,7 +84,7 @@ def position_pied(i):
 
 
 def boucle():
-    global phase
+    global phase, odom_x, odom_y, theta
 
     bouge = abs(vx) > 1e-3 or abs(vy) > 1e-3 or abs(w) > 1e-3
 
@@ -86,6 +92,20 @@ def boucle():
         phase = (phase + CADENCE / FREQ) % 1.0
     else:
         phase = 0.0
+
+    mv = np.sqrt(vx**2 + vy**2)
+    if mv > 1e-3:
+        amp = min(AMP_MAX, GAIN * mv)
+        vitesse = 2 * amp * CADENCE
+        vbx = vitesse * vx / mv
+        vby = vitesse * vy / mv
+    else:
+        vbx = 0.0
+        vby = 0.0
+
+    odom_x += (vbx * np.cos(theta) - vby * np.sin(theta)) / FREQ
+    odom_y += (vbx * np.sin(theta) + vby * np.cos(theta)) / FREQ
+    theta += w / FREQ
 
     angles = []
     for i in range(6):
@@ -96,21 +116,35 @@ def boucle():
         q3 = float(np.clip(q3, -LIM_TIBIA, LIM_TIBIA))
         angles += [q1, q2, q3]
 
+    stamp = node.get_clock().now().to_msg()
+
     msg = JointState()
-    msg.header.stamp = node.get_clock().now().to_msg()
+    msg.header.stamp = stamp
     msg.name = noms
     msg.position = angles
     pub.publish(msg)
 
+    t = TransformStamped()
+    t.header.stamp = stamp
+    t.header.frame_id = 'odom'
+    t.child_frame_id = 'base_link'
+    t.transform.translation.x = float(odom_x)
+    t.transform.translation.y = float(odom_y)
+    t.transform.translation.z = 0.0
+    t.transform.rotation.z = float(np.sin(theta / 2.0))
+    t.transform.rotation.w = float(np.cos(theta / 2.0))
+    br.sendTransform(t)
+
 
 def main():
-    global node, pub, noms
+    global node, pub, br, noms
 
     rclpy.init()
     node = rclpy.create_node('hexapode_node')
 
     pub = node.create_publisher(JointState, '/joint_states', 10)
     node.create_subscription(TwistStamped, '/cmd_vel', recevoir_vitesse, 10)
+    br = TransformBroadcaster(node)
 
     for n in range(1, 7):
         for seg in ['coxa', 'femur', 'tibia']:
