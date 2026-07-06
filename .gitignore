@@ -1,0 +1,20 @@
+# Dossiers generes par colcon
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+
+# Config locale de l'editeur
+.claude/
+
+# Fichiers temporaires LibreOffice / bureautique
+.~lock.*#
+~$*
+
+# Documents (garder hors du repo de code)
+*.docx
+*.pdf
+*.pptx

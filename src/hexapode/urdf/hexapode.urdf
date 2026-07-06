@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<robot name="hexapode_v2">
+
+  <material name="body_grey">
+    <color rgba="0.45 0.45 0.45 1"/>
+  </material>
+  <material name="leg_blue">
+    <color rgba="0.1 0.25 0.9 1"/>
+  </material>
+
+  <!-- PhantomX reference dimensions (meters): body 0.250x0.125, coxa 0.052, femur 0.065, tibia 0.133 -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.250 0.125 0.050"/>
+      </geometry>
+      <material name="body_grey"/>
+    </visual>
+  </link>
+
+  <!-- LEG 1: left front -->
+  <link name="leg_1_coxa_link">
+    <visual>
+      <origin xyz="0.026 0 0"/>
+      <geometry>
+        <box size="0.052 0.025 0.025"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_1_femur_link">
+    <visual>
+      <origin xyz="0.0325 0 -0.015"/>
+      <geometry>
+        <box size="0.065 0.022 0.022"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_1_tibia_link">
+    <visual>
+      <origin xyz="0.0665 0 -0.020"/>
+      <geometry>
+        <box size="0.133 0.018 0.018"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+
+  <joint name="leg_1_coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg_1_coxa_link"/>
+    <origin xyz="0.120 0.060 0" rpy="0 0 0.785"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_1_femur_joint" type="revolute">
+    <parent link="leg_1_coxa_link"/>
+    <child link="leg_1_femur_link"/>
+    <origin xyz="0.052 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.000" upper="1.000" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_1_tibia_joint" type="revolute">
+    <parent link="leg_1_femur_link"/>
+    <child link="leg_1_tibia_link"/>
+    <origin xyz="0.065 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.500" upper="1.500" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- LEG 2: left middle -->
+  <link name="leg_2_coxa_link">
+    <visual>
+      <origin xyz="0.026 0 0"/>
+      <geometry>
+        <box size="0.052 0.025 0.025"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_2_femur_link">
+    <visual>
+      <origin xyz="0.0325 0 -0.015"/>
+      <geometry>
+        <box size="0.065 0.022 0.022"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_2_tibia_link">
+    <visual>
+      <origin xyz="0.0665 0 -0.020"/>
+      <geometry>
+        <box size="0.133 0.018 0.018"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+
+  <joint name="leg_2_coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg_2_coxa_link"/>
+    <origin xyz="0.000 0.100 0" rpy="0 0 1.570"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_2_femur_joint" type="revolute">
+    <parent link="leg_2_coxa_link"/>
+    <child link="leg_2_femur_link"/>
+    <origin xyz="0.052 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.000" upper="1.000" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_2_tibia_joint" type="revolute">
+    <parent link="leg_2_femur_link"/>
+    <child link="leg_2_tibia_link"/>
+    <origin xyz="0.065 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.500" upper="1.500" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- LEG 3: left rear -->
+  <link name="leg_3_coxa_link">
+    <visual>
+      <origin xyz="0.026 0 0"/>
+      <geometry>
+        <box size="0.052 0.025 0.025"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_3_femur_link">
+    <visual>
+      <origin xyz="0.0325 0 -0.015"/>
+      <geometry>
+        <box size="0.065 0.022 0.022"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_3_tibia_link">
+    <visual>
+      <origin xyz="0.0665 0 -0.020"/>
+      <geometry>
+        <box size="0.133 0.018 0.018"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+
+  <joint name="leg_3_coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg_3_coxa_link"/>
+    <origin xyz="-0.120 0.060 0" rpy="0 0 2.356"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_3_femur_joint" type="revolute">
+    <parent link="leg_3_coxa_link"/>
+    <child link="leg_3_femur_link"/>
+    <origin xyz="0.052 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.000" upper="1.000" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_3_tibia_joint" type="revolute">
+    <parent link="leg_3_femur_link"/>
+    <child link="leg_3_tibia_link"/>
+    <origin xyz="0.065 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.500" upper="1.500" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- LEG 4: right front -->
+  <link name="leg_4_coxa_link">
+    <visual>
+      <origin xyz="0.026 0 0"/>
+      <geometry>
+        <box size="0.052 0.025 0.025"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_4_femur_link">
+    <visual>
+      <origin xyz="0.0325 0 -0.015"/>
+      <geometry>
+        <box size="0.065 0.022 0.022"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_4_tibia_link">
+    <visual>
+      <origin xyz="0.0665 0 -0.020"/>
+      <geometry>
+        <box size="0.133 0.018 0.018"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+
+  <joint name="leg_4_coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg_4_coxa_link"/>
+    <origin xyz="0.120 -0.060 0" rpy="0 0 -0.785"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_4_femur_joint" type="revolute">
+    <parent link="leg_4_coxa_link"/>
+    <child link="leg_4_femur_link"/>
+    <origin xyz="0.052 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.000" upper="1.000" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_4_tibia_joint" type="revolute">
+    <parent link="leg_4_femur_link"/>
+    <child link="leg_4_tibia_link"/>
+    <origin xyz="0.065 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.500" upper="1.500" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- LEG 5: right middle -->
+  <link name="leg_5_coxa_link">
+    <visual>
+      <origin xyz="0.026 0 0"/>
+      <geometry>
+        <box size="0.052 0.025 0.025"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_5_femur_link">
+    <visual>
+      <origin xyz="0.0325 0 -0.015"/>
+      <geometry>
+        <box size="0.065 0.022 0.022"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_5_tibia_link">
+    <visual>
+      <origin xyz="0.0665 0 -0.020"/>
+      <geometry>
+        <box size="0.133 0.018 0.018"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+
+  <joint name="leg_5_coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg_5_coxa_link"/>
+    <origin xyz="0.000 -0.100 0" rpy="0 0 -1.570"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_5_femur_joint" type="revolute">
+    <parent link="leg_5_coxa_link"/>
+    <child link="leg_5_femur_link"/>
+    <origin xyz="0.052 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.000" upper="1.000" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_5_tibia_joint" type="revolute">
+    <parent link="leg_5_femur_link"/>
+    <child link="leg_5_tibia_link"/>
+    <origin xyz="0.065 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.500" upper="1.500" effort="10" velocity="1"/>
+  </joint>
+
+  <!-- LEG 6: right rear -->
+  <link name="leg_6_coxa_link">
+    <visual>
+      <origin xyz="0.026 0 0"/>
+      <geometry>
+        <box size="0.052 0.025 0.025"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_6_femur_link">
+    <visual>
+      <origin xyz="0.0325 0 -0.015"/>
+      <geometry>
+        <box size="0.065 0.022 0.022"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+  <link name="leg_6_tibia_link">
+    <visual>
+      <origin xyz="0.0665 0 -0.020"/>
+      <geometry>
+        <box size="0.133 0.018 0.018"/>
+      </geometry>
+      <material name="leg_blue"/>
+    </visual>
+  </link>
+
+  <joint name="leg_6_coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="leg_6_coxa_link"/>
+    <origin xyz="-0.120 -0.060 0" rpy="0 0 -2.356"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-0.785" upper="0.785" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_6_femur_joint" type="revolute">
+    <parent link="leg_6_coxa_link"/>
+    <child link="leg_6_femur_link"/>
+    <origin xyz="0.052 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.000" upper="1.000" effort="10" velocity="1"/>
+  </joint>
+  <joint name="leg_6_tibia_joint" type="revolute">
+    <parent link="leg_6_femur_link"/>
+    <child link="leg_6_tibia_link"/>
+    <origin xyz="0.065 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.500" upper="1.500" effort="10" velocity="1"/>
+  </joint>
+
+</robot>
